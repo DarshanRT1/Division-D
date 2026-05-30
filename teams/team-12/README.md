@@ -118,7 +118,7 @@ GROQ_API_KEY=gsk_your_actual_key_here
 ```
 
 > 💡 **Built-in Simulation Backup**
-> If no API Key is provided, the application automatically triggers **Simulation Mode**, utilizing high-fidelity local procedural engines to generate realistic, theme-matched plans. This ensures the app is 100% functional during evaluations immediately!
+> If no API Key is provided, the application automatically triggers **Simulation Mode**, utilizing high-fidelity local procedural engines to generate realistic, theme-matched plans. 
 
 ### 4. Run the Streamlit Dashboard
 Launch the interface locally:
