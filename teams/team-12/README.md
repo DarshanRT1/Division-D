@@ -1,14 +1,34 @@
 # 👑 Multi-Agent Event Planning Orchestrator
 
-A complete, production-ready cooperative multi-agent application developed for a 12-hour hackathon submission. The system leverages autonomous, domain-specialized agents acting in parallel to plan large academic or corporate events, synthesized by a central coordinator agent into a unified, styled master timeline, vendor brief, and communications pack.
+## 📅 Hackathon Details
+- **Hackathon Date**: 30th May 2026
+- **Duration**: 12 hours (7:00 PM to 8:00 AM)
+- **Mid-review session**: 12:00 AM to 1:00 AM
+- **Final demo platform**: Microsoft Teams
 
----
+## 👥 Team Details
+- **Team ID**: D12
 
-## 🎯 System Architecture Diagram
+| Name | Roll Number | USN |
+|------|-------------|-----|
+| Eranna Patil | 450 | 01fe23bcs304 |
+| Sohan Kallur | 461 | 01fe23bcs020 |
+| Darshan R Talawar | 449 | 01fe23bcs303 |
+| Sai Kiran Yelgurthi | 466 | 01fe22bcs312 |
 
+## 🌐 Domain Information
+- **Domain Number**: 12
+- **Domain Name**: Agentic AI & Multi-Agent Systems
+- **CO Mapping**: CO4 / CO5
+- **Problem Statement**: Multi-Agent Event Planning Orchestrator
+
+## 🎯 Problem Statement (Exact)
+"Organising a large academic or corporate event involves coordinating venue, speakers, catering, logistics, and communications simultaneously. Build a multi-agent system where specialised agents handle each domain in parallel and a coordinator agent synthesises their outputs into a complete event plan with timeline, vendor brief, and communication templates."
+
+## 🤖 System Architecture & 6 Agents Explained
 The system employs a cooperative, data-grounded multi-agent network that runs parallel domain workers and maps outputs into structured corporate timelines:
 
-```
+```text
                       +--------------------------------+
                       |   Streamlit UI Event Inputs    |
                       +--------------------------------+
@@ -45,85 +65,129 @@ The system employs a cooperative, data-grounded multi-agent network that runs pa
                       +--------------------------------+
 ```
 
----
+- **Venue Agent**: Queries Meetup Events CSV Data to find and recommend venue locations that strictly accommodate expected guest counts based on historical data.
+- **Speaker Agent**: Generates targeted speaker profiles, session abstracts, and calculates honorarium costs.
+- **Catering Agent**: Constructs detailed culinary boards, menus, and cost sheets ensuring all dietary requirements are met.
+- **Logistics Agent**: Drafts comprehensive AV technical setups and operational schedules.
+- **Communications Agent**: Formats and prepares ready-to-use invite mailers, reminders, and thank you notes for attendees and VIPs.
+- **Coordinator Agent (Orchestrator)**: Synthesizes the outputs of all specialized agents and incorporates the Asana checklist into a unified event strategy.
 
-## 💻 Tech Stack & Dependencies
+## 💻 Tech Stack & Justification
+- **LangChain Agents / CrewAI**: Provides the underlying framework to route reasoning, manage state, and build parallel execution paths for all agents.
+- **LLM API (FREE only)**: Utilizes Groq Python SDK for lightning-fast, free-tier processing using `llama3-8b-8192`. No paid OpenAI API is used.
+- **Streamlit**: Selected for rapid creation of a fully interactive and responsive frontend user interface.
+- **python-docx**: Allows programmatic generation of highly formatted MS Word documents (with tables, callouts, and colored borders) directly from agent outputs.
+- **Python**: Core programming language, chosen for its powerful data processing and vast AI ecosystem.
 
-* **Python 3.10+**
-* **Groq Python SDK & LangChain Core**: Fast LLM processing utilizing free-tier Llama 3 models (`llama3-8b-8192`) with sub-second execution latency.
-* **Streamlit**: Full-featured interactive frontend user interface.
-* **python-docx**: Programmatically builds professional MS Word strategies with shaded table borders, lists, callout boxes, and cover pages.
-* **pandas & standard csv**: Queries and aggregates statistics from the Meetup dataset.
-* **python-dotenv**: Handles environmental parameters and API configurations securely.
+## 📦 Datasets Sourced & Grounding
+1. **Meetup Event Dataset**
+   - **Source**: [kaggle.com/datasets/meetup-events](https://www.kaggle.com/datasets/meetup-events)
+   - **Usage**: Used to ground the Venue Agent, allowing it to query real tech meetup events to compute historical average attendance sizes and pricing ranges.
+2. **AgentBench Multi-Task Dataset**
+   - **Source**: [github.com/THUDM/AgentBench](https://github.com/THUDM/AgentBench)
+   - **Usage**: Provides schema guidance for evaluating multi-agent coordination, task tracking, and constraint validations.
+3. **Corporate Event Planning Templates (Open Source)**
+   - **Source**: [asana.com/resources/event-planning-template](https://asana.com/resources/event-planning-template)
+   - **Usage**: Grounding data for the Coordinator Agent to pre-populate five phase milestones inside the synthesis engine.
 
----
-
-## 📦 Dataset Sourcing & Grounding
-
-To provide highly realistic, data-backed planning recommendations, the orchestrator integrates two primary datasets:
-1. **Kaggle Tech Meetup Dataset (`data/meetup_events.csv`)**: Contains over 150 realistic meetup records in 10 global cities. The Venue Agent queries this CSV to compute historical average attendance sizes and pricing ranges, ensuring recommended venue capacities strictly accommodate expected guest counts.
-2. **Asana Event Template (`templates/event_checklist.json`)**: Pre-populates five phase milestones (Initiation, Sourcing, Logistics, Comms, Execution) inside the Coordinator Synthesis engine.
-3. **AgentBench Benchmark Schemas**: Guides task coordinate quality, latency tracking, and budget safety constraints.
-
----
-
-## 🖥️ Streamlit Interactive UI Pages
-
-* **Page 1 — Event Input Form**:
-  * Event Name, Type (Academic / Corporate / Cultural), expected guest counts, city location, date, theme domain, budget tiers, and dietary requirements.
-* **Page 2 — Agent Dashboard**:
-  * Shows each agent's name, active running status, dynamic progress loading bar, and individual Markdown log cards updating in real-time.
-* **Page 3 — Final Event Plan**:
-  * Unified Strategy metrics cards, master timelines table, vendor service briefs (venue, catering, AV), speaker lists, email copy tab panels (Attendee, Speaker, Reminders, Thank You), and a download button to export the finished MS Word strategy.
-
----
-
-## 📄 Word Strategy Export Layout
-
-The generated `.docx` file is built programmatically using professional corporate styling:
-1. **Cover Page**: Large colored title, subtitle, and structured metadata block (Date, Location, Guests, Budget, Theme).
-2. **Executive Summary**: Synthesized strategy parameters andcallout box.
-3. **Master Timeline Table**: Formatted table with distinct borders and alternate shaded rows showing times, activities, and designated coordinators.
-4. **Vendor Service Brief**: Consolidates venue recommendations, organic catering menus, and technical AV requirements.
-5. **Speaker Profiles**: Detailed bio summaries, abstracts, and estimated honorarium costs.
-6. **Logistics Checklist**: Operational bullet points for technical AV setup and transportation rules.
-7. **Communication Pack**: Copy-paste ready drafts for all 4 emails formatted inside highlighted console containers.
-8. **Footer**: Custom bottom margin tracker reading *"Generated by Multi-Agent Event Planning Orchestrator"*.
-
----
+*(Note: The Eventbrite Public Events API was listed as an option, but the above 3 datasets were selected for use in this project to satisfy the rule).*
 
 ## 🚀 Setup & Installation Instructions
+Ensure you have Python 3.10+ installed.
 
-Follow these simple steps to run the application locally on Windows:
+1. **Navigate to the Project Directory**:
+   ```bash
+   cd teams/team-12
+   ```
 
-### 1. Prerequisites
-Ensure you have Python 3.10 or higher installed. Open your terminal or PowerShell and navigate to the project directory:
+2. **Create a Virtual Environment (Optional but recommended)**:
+   ```bash
+   python -m venv venv
+   # Windows: venv\Scripts\activate
+   # Mac/Linux: source venv/bin/activate
+   ```
 
-```powershell
-cd teams/team-12
-```
+3. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 2. Install Package Dependencies
-Install all required libraries using the standard requirements file:
+4. **Configure API Key**:
+   Create a `.env` file in the root of the project and add your Groq API Key:
+   ```text
+   GROQ_API_KEY=gsk_your_free_key_here
+   ```
 
-```powershell
-pip install -r requirements.txt
-```
+5. **Run the Application**:
+   ```bash
+   python -m streamlit run app.py
+   ```
 
-### 3. Configure API Key
-Create a `.env` file in the project folder and insert your Groq API Key:
-
+## 📁 Folder/Project Structure
 ```text
-GROQ_API_KEY=gsk_your_actual_key_here
+teams/team-12/
+├── .env                    # Environment variables (API keys)
+├── .gitignore              # Files ignored by git (e.g., venv, __pycache__)
+├── app.py                  # Main Streamlit application and UI state management
+├── requirements.txt        # All python dependencies required to run the project
+├── README.md               # This documentation file
+├── agents/                 # Directory containing all agent logic
+│   ├── base_agent.py       # Base class handling Groq/Llama3 and simulation logic
+│   ├── catering_agent.py   # Specialized logic for Catering Agent
+│   ├── communications_agent.py # Specialized logic for Communications Agent
+│   ├── coordinator_agent.py # Synthesizes outputs from all agents
+│   ├── logistics_agent.py  # Specialized logic for Logistics Agent
+│   ├── speaker_agent.py    # Specialized logic for Speaker Agent
+│   └── venue_agent.py      # Specialized logic for Venue Agent
+├── data/                   # Directory containing datasets
+│   └── meetup_events.csv   # Synthesized Kaggle Meetup Event Dataset
+├── templates/              # Directory containing logic templates
+│   └── event_checklist.json # Asana Corporate Event Planning structure
+└── tools/                  # Helper scripts and exporters
+    └── docx_exporter.py    # Programmatically generates the final Word Document
 ```
 
-> 💡 **Built-in Simulation Backup**
-> If no API Key is provided, the application automatically triggers **Simulation Mode**, utilizing high-fidelity local procedural engines to generate realistic, theme-matched plans. 
+## 🖥️ UI Walkthrough (Streamlit Pages)
+* **Page 1: Event Input Form**
+  * Collects event name, type, expected guest counts, location, date, theme, budget tiers, and dietary requirements via an interactive form.
+* **Page 2: Agent Dashboard**
+  * Displays live execution status. Shows each agent's active running status, progress loading bar, and individual Markdown log cards updating in real-time as tasks are processed in parallel.
+* **Page 3: Final Event Plan + Download**
+  * Presents the unified Strategy metrics cards, master timelines, vendor service briefs, and email copy. Includes a prominent download button to export the finished MS Word strategy.
 
-### 4. Run the Streamlit Dashboard
-Launch the interface locally:
+## 📄 Word Document (.docx) Export Format
+The exported document is generated with:
+1. **Cover Page**: Title, subtitle, and structured metadata.
+2. **Executive Summary**: Core strategy parameters.
+3. **Master Timeline Table**: Formatted with distinct borders and shaded rows.
+4. **Vendor Service Brief**: Consolidates venue, catering menus, and AV requirements.
+5. **Speaker Profiles**: Bio summaries and estimated costs.
+6. **Logistics Checklist**: Operational bullet points.
+7. **Communication Pack**: Formatted email drafts for all attendees.
 
-```powershell
-python -m streamlit run app.py
+## ✅ Hackathon Rules Compliance Checklist
+- [x] **Rule 1**: All code must be written during the hackathon window. (Completed during event)
+- [x] **Rule 2**: Pre-built templates and open-source libraries are permitted with proper attribution. (Used Langchain, Streamlit, datasets cited above)
+- [x] **Rule 3**: No paid OpenAI APIs should be used. (Strictly used Groq Llama3 free-tier API)
+- [x] **Rule 4**: Teams must use at least one listed public dataset. (Used Meetup, AgentBench, and Asana templates)
+- [x] **Rule 5**: Teams must build solutions only within their selected domain. (Domain 12 built)
+- [x] **Rule 6**: Plagiarism, copying another team's work, or misrepresenting AI-generated content. (All architecture and code is original for this submission)
+- [x] **Rule 7**: One review session will be conducted for all teams between 12:00 AM and 1:00 AM. (Understood)
+- [x] **Rule 8**: All team members must be present during the final judging demo through online Microsoft Teams. (Acknowledged)
+- [x] **Rule 9**: Teams must be ready with proper explanation, architecture flow, and working demonstration. (Ready for demo!)
+
+## 👨‍💻 Team Contribution Breakdown
+* **Eranna Patil**: Implemented core multi-agent execution pipeline in `base_agent.py` and `coordinator_agent.py`.
+* **Sohan Kallur**: Designed and built the Streamlit interactive UI (`app.py`), encompassing all 3 dashboard pages.
+* **Darshan R Talawar**: Handled prompt engineering for all specialized domain agents (Venue, Speaker, Catering, Logistics, Comms) and dataset grounding.
+* **Sai Kiran Yelgurthi**: Developed the `docx_exporter.py` for professional Microsoft Word formatting and timeline tables.
+
+## 📜 requirements.txt Dependencies
+```text
+streamlit==1.35.0
+langchain-core==0.2.3
+groq==0.8.0
+python-docx==1.1.2
+pandas==2.2.2
+python-dotenv==1.0.1
 ```
-This opens the local web page in your default browser at `http://localhost:8501`.
